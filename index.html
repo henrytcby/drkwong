@@ -273,6 +273,27 @@
       box-shadow: 0 12px 30px rgba(0,0,0,0.22);
     }
 
+    .collection-images {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      overflow-x: auto;
+    }
+
+    .collection-images img {
+      width: 90px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+      transition: 0.25s;
+    }
+
+    .collection-images img:hover {
+      transform: scale(1.08);
+    }
+
     .showcase-meta {
       display: flex;
       flex-wrap: wrap;
