@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>黑金寶可夢卡收藏</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Helvetica Neue", sans-serif;
+    background: #000;
+    color: #fff;
+}
+
+/* Navbar */
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+    z-index: 1000;
+}
+
+nav h1 {
+    color: gold;
+    font-size: 20px;
+}
+
+nav a {
+    color: #fff;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+/* Hero */
+.hero {
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1608889175111-0e9a4b7d1f7b') center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 50px;
+    color: gold;
+}
+
+.hero p {
+    font-size: 20px;
+}
+
+/* Section */
+.section {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.section h2 {
+    color: gold;
+    margin-bottom: 30px;
+}
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #111;
+    padding: 20px;
+    border: 1px solid gold;
+    border-radius: 10px;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    text-align: center;
+    background: #111;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <h1>PokéGold</h1>
+    <div>
+        <a href="#home">首頁</a>
+        <a href="#products">商品</a>
+        <a href="#about">關於我</a>
+        <a href="#contact">聯絡</a>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div>
+        <h2>頂級寶可夢卡收藏</h2>
+        <p>PSA10・稀有卡・投資級收藏</p>
+    </div>
+</section>
+
+<section class="section" id="products">
+    <h2>精選卡片</h2>
+    <div class="cards">
+        <div class="card">
+            <img src="https://images.pokemontcg.io/swsh4/25_hires.png">
+            <h3>皮卡丘 VMAX</h3>
+            <p>PSA10</p>
+            <p>NT$ 25,000</p>
+        </div>
+
+        <div class="card">
+            <img src="https://images.pokemontcg.io/swsh7/184_hires.png">
+            <h3>烈空坐 VMAX</h3>
+            <p>PSA10</p>
+            <p>NT$ 35,000</p>
+        </div>
+
+        <div class="card">
+            <img src="https://images.pokemontcg.io/swsh1/25_hires.png">
+            <h3>噴火龍 V</h3>
+            <p>PSA9</p>
+            <p>NT$ 18,000</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="about">
+    <h2>關於我</h2>
+    <p>專營寶可夢高端收藏卡，提供真品保證與專業評價。</p>
+</section>
+
+<section class="section" id="contact">
+    <h2>聯絡方式</h2>
+    <p>IG: @yourstore</p>
+    <p>LINE: yourlineid</p>
+</section>
+
+<footer>
+    <p>© 2026 PokéGold All Rights Reserved</p>
+</footer>
+
+</body>
+</html>
