@@ -38,6 +38,51 @@
       color: #d4af37;
     }
 
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(212, 175, 55, 0.9);
+      box-shadow: 0 0 0 0 rgba(212,175,55,0.0);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .avatar-link:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 0 18px rgba(212,175,55,0.35);
+    }
+
+    .avatar-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .collector-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      color: #f4df9a;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      text-transform: uppercase;
+    }
+
     .menu {
       display: flex;
       gap: 18px;
@@ -152,6 +197,82 @@
       color: rgba(245,241,230,0.82);
       margin-bottom: 30px;
     }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-bottom: 34px;
+    }
+
+    .showcase-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.22);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 55px rgba(0,0,0,0.32);
+    }
+
+    .showcase-media {
+      aspect-ratio: 4 / 5;
+      background: rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+
+    .showcase-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .showcase-body {
+      padding: 20px;
+    }
+
+    .showcase-kicker {
+      font-size: 12px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: rgba(245,241,230,0.62);
+      margin-bottom: 8px;
+    }
+
+    .showcase-card h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    .showcase-card p {
+      margin: 0;
+      line-height: 1.8;
+      color: rgba(245,241,230,0.86);
+    }
+
+    .showcase-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .showcase-meta span {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .showcase-pokemon .showcase-body h3 { color: #ffd24a; }
+    .showcase-sailormoon .showcase-body h3 { color: #ffd8f0; }
+    .showcase-yuyu .showcase-body h3 { color: #b8ffe9; }
 
     .theme-grid {
       display: grid;
@@ -335,7 +456,7 @@
     }
 
     @media (max-width: 980px) {
-      .hero, .info-grid, .theme-grid {
+      .hero, .info-grid, .theme-grid, .featured-grid {
         grid-template-columns: 1fr;
       }
 
@@ -381,7 +502,15 @@
 </head>
 <body>
   <header class="topbar">
-    <a href="#home" class="brand">Henry Card Collection</a>
+    <div class="brand-wrap">
+      <a href="#home" class="avatar-link" aria-label="回到首頁">
+        <img src="images/avatar.jpg" alt="Henry avatar" />
+      </a>
+      <div>
+        <a href="#home" class="brand">Henry Card Collection</a>
+        <div class="collector-tag">Card Collection</div>
+      </div>
+    </div>
     <nav class="menu">
       <a href="#home">Main Page</a>
       <a href="#pokemon">寶可夢</a>
@@ -420,6 +549,57 @@
       </div>
 
       <section class="section">
+        <h2 class="section-title">首頁精選收藏</h2>
+        <p class="section-sub">
+          這裡可以先放你最想展示的代表卡，讓訪客一進站就知道你的收藏重點。下面這區我已經先幫你做成收藏櫃風格，之後你只要把卡名、說明和圖片換成自己的內容就可以。
+        </p>
+
+        <div class="featured-grid">
+          <article class="showcase-card showcase-pokemon">
+            <div class="showcase-media">
+              <img src="images/pokemon-feature.jpg" alt="寶可夢精選收藏" />
+            </div>
+            <div class="showcase-body">
+              <div class="showcase-kicker">Featured Collection</div>
+              <h3>寶可夢精選卡</h3>
+              <p>可放你的主力收藏，例如皮卡丘、伊布家族、噴火龍、限定 PROMO 或 PSA10 招牌卡。</p>
+              <div class="showcase-meta">
+                <span>Pokemon</span><span>High Rarity</span><span>PSA</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="showcase-card showcase-sailormoon">
+            <div class="showcase-media">
+              <img src="images/sailormoon-feature.jpg" alt="美少女戰士精選收藏" />
+            </div>
+            <div class="showcase-body">
+              <div class="showcase-kicker">Featured Collection</div>
+              <h3>美少女戰士精選卡</h3>
+              <p>可展示閃卡、會員證、懷舊收藏或你自己最喜歡的角色系列，走夢幻華麗感。</p>
+              <div class="showcase-meta">
+                <span>Sailor Moon</span><span>Vintage</span><span>Special</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="showcase-card showcase-yuyu">
+            <div class="showcase-media">
+              <img src="images/yuyu-feature.jpg" alt="幽遊白書精選收藏" />
+            </div>
+            <div class="showcase-body">
+              <div class="showcase-kicker">Featured Collection</div>
+              <h3>幽遊白書精選卡</h3>
+              <p>適合放經典角色卡、特殊版本與主題收藏，讓整體更像作品策展展示牆。</p>
+              <div class="showcase-meta">
+                <span>Yu Yu Hakusho</span><span>Classic</span><span>Collection</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
         <h2 class="section-title">收藏主題入口</h2>
         <p class="section-sub">
           主頁負責總覽與導覽，進入各分頁後再切換到對應作品的視覺語言，讓整個網站既統一又有層次。
@@ -445,7 +625,23 @@
           </a>
         </div>
       </section>
-    </section>
+
+      <!-- 收藏展示區（實際卡片） -->
+      <section class="section">
+        <h2 class="section-title">實際收藏展示</h2>
+        <p class="section-sub">以下為你的實際收藏卡展示（幽遊白書＋美少女戰士），已做成收藏牆風格。</p>
+
+        <div class="real-gallery">
+          <img src="images/yuyu1.jpg">
+          <img src="images/yuyu2.jpg">
+          <img src="images/sailor1.jpg">
+          <img src="images/sailor2.jpg">
+          <img src="images/sailor3.jpg">
+          <img src="images/sailor4.jpg">
+        </div>
+      </section>
+
+      </section>
 
     <section id="pokemon" class="page page-pokemon">
       <div class="sub-hero">
