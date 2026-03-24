@@ -6,12 +6,18 @@
   <title>Henry Card Collection</title>
   <style>
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
     body {
       margin: 0;
       font-family: "Helvetica Neue", Arial, sans-serif;
       background: #070707;
       color: #f5f1e6;
+      overflow-x: hidden;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -42,6 +48,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
     }
 
     .avatar-link {
@@ -56,6 +63,7 @@
       box-shadow: 0 0 0 0 rgba(212,175,55,0.0);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       background: rgba(255,255,255,0.04);
+      flex-shrink: 0;
     }
 
     .avatar-link:hover {
@@ -102,6 +110,8 @@
       min-height: 100vh;
       display: none;
       padding-top: 84px;
+      width: 100%;
+      overflow-x: hidden;
     }
 
     .page.active { display: block; }
@@ -138,6 +148,7 @@
       border-radius: 24px;
       padding: 26px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.28);
+      min-width: 0;
     }
 
     .hero-grid {
@@ -212,6 +223,7 @@
       overflow: hidden;
       box-shadow: 0 20px 50px rgba(0,0,0,0.22);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
+      min-width: 0;
     }
 
     .showcase-card:hover {
@@ -275,9 +287,10 @@
 
     .collection-images {
       display: flex;
-      gap: 8px;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-top: 12px;
-      overflow-x: auto;
+      max-width: 100%;
     }
 
     .collection-images img {
@@ -286,7 +299,7 @@
       object-fit: cover;
       border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.1);
-      flex-shrink: 0;
+      display: block;
       transition: 0.25s;
     }
 
@@ -354,6 +367,7 @@
       border-radius: 999px;
       background: rgba(255,255,255,0.08);
       backdrop-filter: blur(6px);
+      max-width: 90vw;
     }
 
     .showcase-meta {
@@ -389,6 +403,7 @@
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.08);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
+      min-width: 0;
     }
 
     .theme-panel:hover {
@@ -438,6 +453,7 @@
       min-height: 52vh;
       display: flex;
       align-items: flex-end;
+      width: 100%;
     }
 
     .sub-hero h1 {
@@ -455,6 +471,7 @@
 
     .sub-content {
       padding: 0 8vw 70px;
+      width: 100%;
     }
 
     .info-grid {
@@ -462,6 +479,8 @@
       grid-template-columns: 1.15fr 0.85fr;
       gap: 24px;
       margin-top: -34px;
+      width: 100%;
+      min-width: 0;
     }
 
     .info-box {
@@ -470,6 +489,7 @@
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.08);
       backdrop-filter: blur(8px);
+      min-width: 0;
     }
 
     .info-box h2 {
@@ -488,6 +508,8 @@
       padding: 18px;
       background: rgba(0,0,0,0.18);
       border: 1px solid rgba(255,255,255,0.08);
+      min-width: 0;
+      width: 100%;
     }
 
     .collection-item h3 {
@@ -595,8 +617,34 @@
 
       .theme-panel,
       .info-box,
-      .hero-card {
+      .hero-card,
+      .collection-item {
         padding: 20px;
+      }
+
+      .info-grid,
+      .info-box,
+      .collection-item {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .collection-images {
+        gap: 8px;
+      }
+
+      .collection-images img {
+        width: 72px;
+        height: 96px;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .collector-tag {
+        font-size: 10px;
       }
     }
   </style>
@@ -727,22 +775,20 @@
         </div>
       </section>
 
-      <!-- 收藏展示區（實際卡片） -->
       <section class="section">
         <h2 class="section-title">實際收藏展示</h2>
         <p class="section-sub">以下為你的實際收藏卡展示（幽遊白書＋美少女戰士），已做成收藏牆風格。</p>
 
         <div class="real-gallery">
-          <img src="image/yuyu/IMG_7998.jpeg">
-          <img src="image/yuyu/IMG_7999.jpeg">
-          <img src="image/yuyu/IMG_8001.jpeg">
-          <img src="image/yuyu/IMG_8002.jpeg">
-          <img src="image/sailor/IMG_8005.jpeg">
-          <img src="image/sailor/IMG_8011.jpeg">
+          <img src="image/yuyu/IMG_7998.jpeg" alt="幽遊白書收藏 1">
+          <img src="image/yuyu/IMG_7999.jpeg" alt="幽遊白書收藏 2">
+          <img src="image/yuyu/IMG_8001.jpeg" alt="幽遊白書收藏 3">
+          <img src="image/yuyu/IMG_8002.jpeg" alt="幽遊白書收藏 4">
+          <img src="image/sailor/IMG_8005.jpeg" alt="美少女戰士收藏 1">
+          <img src="image/sailor/IMG_8011.jpeg" alt="美少女戰士收藏 2">
         </div>
       </section>
-
-      </section>
+    </section>
 
     <section id="pokemon" class="page page-pokemon">
       <div class="sub-hero">
@@ -762,6 +808,9 @@
               <div class="collection-item">
                 <h3>精選收藏</h3>
                 <p>可放 PSA10、人氣角色卡、限定 PROMO、經典系列代表卡。</p>
+                <div class="collection-images">
+                  <img src="image/pokemon/IMG_7997.JPG" alt="寶可夢收藏 1">
+                </div>
               </div>
               <div class="collection-item">
                 <h3>系列分類</h3>
@@ -807,19 +856,19 @@
                 <h3>組合 (TEAM)</h3>
                 <p>可分水手月亮、水手火星、水手木星、水手金星等角色支線收藏。</p>
                 <div class="collection-images">
-                  <img src="image/sailor/IMG_8005.jpeg">
-                  <img src="image/sailor/IMG_8011.jpeg">
+                  <img src="image/sailor/IMG_8005.jpeg" alt="美少女戰士 TEAM 1">
+                  <img src="image/sailor/IMG_8011.jpeg" alt="美少女戰士 TEAM 2">
                 </div>
               </div>
               <div class="collection-item">
                 <h3>個人 (INDIVIDUAL)</h3>
                 <p>月亮、水星、火星、木星、金星等角色。</p>
                 <div class="collection-images">
-                  <img src="image/sailor/IMG_8006.jpeg">
-                  <img src="image/sailor/IMG_8007.jpeg">
-                  <img src="image/sailor/IMG_8008.jpeg">
-                  <img src="image/sailor/IMG_8009.jpeg">
-                  <img src="image/sailor/IMG_8010.jpeg">
+                  <img src="image/sailor/IMG_8006.jpeg" alt="美少女戰士個人卡 1">
+                  <img src="image/sailor/IMG_8007.jpeg" alt="美少女戰士個人卡 2">
+                  <img src="image/sailor/IMG_8008.jpeg" alt="美少女戰士個人卡 3">
+                  <img src="image/sailor/IMG_8009.jpeg" alt="美少女戰士個人卡 4">
+                  <img src="image/sailor/IMG_8010.jpeg" alt="美少女戰士個人卡 5">
                 </div>
               </div>
               <div class="collection-item">
@@ -861,6 +910,12 @@
               <div class="collection-item">
                 <h3>角色系統</h3>
                 <p>可分幽助、飛影、藏馬、桑原、戶愚呂、仙水等角色收藏專區。</p>
+                <div class="collection-images">
+                  <img src="image/yuyu/IMG_7998.jpeg" alt="幽遊白書收藏 1">
+                  <img src="image/yuyu/IMG_7999.jpeg" alt="幽遊白書收藏 2">
+                  <img src="image/yuyu/IMG_8001.jpeg" alt="幽遊白書收藏 3">
+                  <img src="image/yuyu/IMG_8002.jpeg" alt="幽遊白書收藏 4">
+                </div>
               </div>
               <div class="collection-item">
                 <h3>作品氛圍</h3>
@@ -889,16 +944,14 @@
   </main>
 
   <div class="lightbox" id="lightbox">
-      <button class="lightbox-close" id="lightboxClose" aria-label="關閉">&times;</button>
-      <img id="lightboxImg" src="" alt="">
-      <div class="lightbox-caption" id="lightboxCaption"></div>
+    <button class="lightbox-close" id="lightboxClose" aria-label="關閉">&times;</button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
 
   <footer>
     © 2026 Henry Card Collection ・ Main page 為黑金總覽，三個主題頁依作品切換專屬視覺。
   </footer>
-
-
 
   <script>
     const pages = document.querySelectorAll('.page');
@@ -960,7 +1013,5 @@
       bindLightbox();
     });
   </script>
-
-
 </body>
 </html>
