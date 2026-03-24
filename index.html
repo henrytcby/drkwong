@@ -6,12 +6,17 @@
   <title>Henry Card Collection</title>
   <style>
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
     body {
       margin: 0;
       font-family: "Helvetica Neue", Arial, sans-serif;
       background: #070707;
       color: #f5f1e6;
+      overflow-x: hidden;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -274,10 +279,11 @@
     }
 
     .collection-images {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-      overflow-x: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+    max-width: 100%;
     }
 
     .collection-images img {
@@ -286,7 +292,7 @@
       object-fit: cover;
       border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.1);
-      flex-shrink: 0;
+      display: block;
       transition: 0.25s;
     }
 
@@ -595,10 +601,28 @@
 
       .theme-panel,
       .info-box,
-      .hero-card {
+      .hero-card,
+      .collection-item {
         padding: 20px;
       }
-    }
+
+      .info-grid,
+      .info-box,
+      .collection-item {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+  .collection-images {
+    gap: 8px;
+  }
+
+  .collection-images img {
+    width: 72px;
+    height: 96px;
+  }
+}
   </style>
 </head>
 <body>
