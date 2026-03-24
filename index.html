@@ -1,224 +1,808 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Henry Card Collection</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Henry Card Collection</title>
+  <style>
+    * { box-sizing: border-box; }
 
-<style>
-* { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background: #070707;
+      color: #f5f1e6;
+      overflow-x: hidden;
+    }
 
-body {
-  margin: 0;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  background: #070707;
-  color: #f5f1e6;
-  overflow-x: hidden;
-}
+    a { color: inherit; text-decoration: none; }
 
-a { text-decoration: none; color: inherit; }
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 28px;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+    }
 
-/* ===== Navbar ===== */
-.topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 28px;
-  background: rgba(0,0,0,0.8);
-  z-index: 1000;
-}
+    .brand {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #d4af37;
+    }
 
-.brand { color: gold; font-weight: bold; }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
 
-.menu { display: flex; gap: 16px; }
+    .avatar-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(212, 175, 55, 0.9);
+      box-shadow: 0 0 0 0 rgba(212,175,55,0.0);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      background: rgba(255,255,255,0.04);
+      flex-shrink: 0;
+    }
 
-/* ===== Page ===== */
-.page { display: none; padding-top: 80px; }
-.page.active { display: block; }
+    .avatar-link:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 0 18px rgba(212,175,55,0.35);
+    }
 
-/* ===== Section ===== */
-.section { padding: 40px 20px; }
+    .avatar-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-/* ===== Gallery ===== */
-.real-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
-  gap: 12px;
-}
+    .collector-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      color: #f4df9a;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
 
-.real-gallery img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 10px;
-  cursor: pointer;
-}
+    .menu {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
 
-/* ===== Collection images ===== */
-.collection-images {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
-}
+    .menu a {
+      color: #f5f1e6;
+      font-size: 14px;
+      opacity: 0.9;
+      transition: 0.25s;
+    }
 
-.collection-images img {
-  width: 80px;
-  height: 110px;
-  object-fit: cover;
-  border-radius: 8px;
-  cursor: pointer;
-}
+    .menu a:hover { color: #d4af37; }
 
-/* ===== Lightbox ===== */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
+    .page {
+      min-height: 100vh;
+      display: none;
+      padding-top: 84px;
+      width: 100%;
+      overflow-x: hidden;
+    }
 
-.lightbox.active { display: flex; }
+    .page.active { display: block; }
 
-.lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-}
+    .hero {
+      min-height: calc(100vh - 84px);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 30px;
+      align-items: center;
+      padding: 56px 8vw;
+      background:
+        radial-gradient(circle at top right, rgba(212,175,55,0.18), transparent 30%),
+        linear-gradient(135deg, #080808 0%, #111111 45%, #060606 100%);
+    }
 
-.lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 30px;
-  color: white;
-  background: none;
-  border: none;
-}
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 74px);
+      margin: 0 0 18px;
+      line-height: 1.05;
+      color: #d4af37;
+    }
 
-/* ===== Mobile fix ===== */
-@media (max-width:640px){
-  .collection-images img{
-    width:65px;
-    height:90px;
-  }
-}
-</style>
+    .hero p {
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 680px;
+      color: rgba(245,241,230,0.88);
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(212,175,55,0.28);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.28);
+      min-width: 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .mini-card {
+      min-height: 180px;
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .mini-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .mini-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.84);
+    }
+
+    .pokemon-card {
+      background: linear-gradient(145deg, rgba(11,33,74,0.95), rgba(203,163,34,0.18));
+    }
+
+    .sailormoon-card {
+      background: linear-gradient(145deg, rgba(84,27,95,0.92), rgba(234,177,213,0.25));
+    }
+
+    .yuyu-card {
+      background: linear-gradient(145deg, rgba(9,56,45,0.95), rgba(61,179,136,0.22));
+    }
+
+    .section {
+      padding: 70px 8vw;
+    }
+
+    .section-title {
+      font-size: 34px;
+      margin: 0 0 16px;
+      color: #d4af37;
+    }
+
+    .section-sub {
+      max-width: 780px;
+      line-height: 1.8;
+      color: rgba(245,241,230,0.82);
+      margin-bottom: 30px;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-bottom: 34px;
+    }
+
+    .showcase-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.22);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      min-width: 0;
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 55px rgba(0,0,0,0.32);
+    }
+
+    .showcase-media {
+      aspect-ratio: 4 / 5;
+      background: rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+
+    .showcase-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .showcase-body {
+      padding: 20px;
+    }
+
+    .showcase-kicker {
+      font-size: 12px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: rgba(245,241,230,0.62);
+      margin-bottom: 8px;
+    }
+
+    .showcase-card h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    .showcase-card p {
+      margin: 0;
+      line-height: 1.8;
+      color: rgba(245,241,230,0.86);
+    }
+
+    .real-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .real-gallery img {
+      width: 100%;
+      max-width: 220px;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+    }
+
+    .collection-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      max-width: 100%;
+    }
+
+    .collection-images img {
+      width: 90px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: block;
+      transition: 0.25s;
+    }
+
+    .collection-images img:hover {
+      transform: scale(1.08);
+    }
+
+    .collection-images img,
+    .real-gallery img,
+    .showcase-media img {
+      cursor: pointer;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 9999;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: min(92vw, 1000px);
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      font-size: 36px;
+      line-height: 1;
+      color: #fff;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      opacity: 0.85;
+    }
+
+    .lightbox-close:hover {
+      opacity: 1;
+    }
+
+    .lightbox-caption {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.88);
+      font-size: 14px;
+      text-align: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(6px);
+      max-width: 90vw;
+    }
+
+    .showcase-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .showcase-meta span {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .showcase-pokemon .showcase-body h3 { color: #ffd24a; }
+    .showcase-sailormoon .showcase-body h3 { color: #ffd8f0; }
+    .showcase-yuyu .showcase-body h3 { color: #b8ffe9; }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .theme-panel {
+      border-radius: 24px;
+      padding: 28px;
+      min-height: 280px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      min-width: 0;
+    }
+
+    .theme-panel:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+    }
+
+    .theme-panel h3 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .theme-panel p {
+      line-height: 1.8;
+      color: rgba(255,255,255,0.88);
+      max-width: 90%;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      font-weight: 600;
+      transition: 0.25s;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.09);
+    }
+
+    .panel-pokemon {
+      background: linear-gradient(140deg, #0b1f44 0%, #123977 42%, #b58c1c 100%);
+    }
+
+    .panel-sailormoon {
+      background: linear-gradient(145deg, #4a1046 0%, #a44fa7 45%, #f4cbe5 100%);
+    }
+
+    .panel-yuyu {
+      background: linear-gradient(145deg, #05261f 0%, #0f5d4a 50%, #84ffd2 100%);
+    }
+
+    .sub-hero {
+      padding: 88px 8vw 50px;
+      min-height: 52vh;
+      display: flex;
+      align-items: flex-end;
+      width: 100%;
+    }
+
+    .sub-hero h1 {
+      margin: 0 0 14px;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.1;
+    }
+
+    .sub-hero p {
+      max-width: 760px;
+      line-height: 1.8;
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .sub-content {
+      padding: 0 8vw 70px;
+      width: 100%;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      margin-top: -34px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .info-box {
+      border-radius: 24px;
+      padding: 28px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      min-width: 0;
+    }
+
+    .info-box h2 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .collection-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .collection-item {
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.08);
+      min-width: 0;
+      width: 100%;
+    }
+
+    .collection-item h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+    }
+
+    .collection-item p {
+      margin: 0;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .page-pokemon {
+      background: linear-gradient(180deg, #081328 0%, #0d2246 35%, #b68d1d 130%);
+    }
+
+    .page-pokemon .sub-hero {
+      background: radial-gradient(circle at top right, rgba(255,231,140,0.28), transparent 26%);
+    }
+
+    .page-pokemon h1,
+    .page-pokemon h2 { color: #ffd24a; }
+
+    .page-sailormoon {
+      background: linear-gradient(180deg, #2c0931 0%, #6e2176 48%, #f2c3dd 145%);
+    }
+
+    .page-sailormoon .sub-hero {
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 28%);
+    }
+
+    .page-sailormoon h1,
+    .page-sailormoon h2 { color: #ffd8f0; }
+
+    .page-yuyu {
+      background: linear-gradient(180deg, #031814 0%, #0b4b3c 46%, #8df5d2 145%);
+    }
+
+    .page-yuyu .sub-hero {
+      background: radial-gradient(circle at top right, rgba(168,255,226,0.22), transparent 30%);
+    }
+
+    .page-yuyu h1,
+    .page-yuyu h2 { color: #b8ffe9; }
+
+    footer {
+      padding: 28px 8vw 40px;
+      color: rgba(245,241,230,0.6);
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    @media (max-width: 980px) {
+      .hero, .info-grid, .theme-grid, .featured-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 40px;
+        padding-bottom: 50px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        padding: 14px 16px;
+        align-items: flex-start;
+        gap: 10px;
+        flex-direction: column;
+      }
+
+      .menu {
+        gap: 12px;
+      }
+
+      .hero,
+      .section,
+      .sub-hero,
+      .sub-content,
+      footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .theme-panel,
+      .info-box,
+      .hero-card,
+      .collection-item {
+        padding: 20px;
+      }
+
+      .info-grid,
+      .info-box,
+      .collection-item {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .collection-images {
+        gap: 8px;
+      }
+
+      .collection-images img {
+        width: 72px;
+        height: 96px;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .collector-tag {
+        font-size: 10px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<header class="topbar">
-  <div class="brand">Henry Card</div>
-  <nav class="menu">
-    <a href="#home">Home</a>
-    <a href="#pokemon">寶可夢</a>
-    <a href="#sailormoon">美少女戰士</a>
-    <a href="#yuyu">幽遊白書</a>
-  </nav>
-</header>
-
-<main>
-
-<!-- ===== Home ===== -->
-<section id="home" class="page active">
-  <div class="section">
-    <h2>收藏展示</h2>
-
-    <div class="real-gallery">
-      <img src="image/yuyu/IMG_7998.jpeg">
-      <img src="image/yuyu/IMG_7999.jpeg">
-      <img src="image/sailor/IMG_8005.jpeg">
-      <img src="image/sailor/IMG_8011.jpeg">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <a href="#home" class="avatar-link" aria-label="回到首頁">
+        <img src="image/header/IMG_7951.jpeg" alt="Henry avatar" />
+      </a>
+      <div>
+        <a href="#home" class="brand">Henry Card Collection</a>
+        <div class="collector-tag">Hobby & Vintage</div>
+      </div>
     </div>
+    <nav class="menu">
+      <a href="#home">Main Page</a>
+      <a href="#pokemon">寶可夢</a>
+      <a href="#sailormoon">美少女戰士</a>
+      <a href="#yuyu">幽遊白書</a>
+    </nav>
+  </header>
 
-  </div>
-</section>
+  <main>
+    <section id="home" class="page active">
+      <div class="hero">
+        <div>
+          <h1>收藏不只是一張卡，<br>而是一整個作品宇宙。</h1>
+          <p>
+            這個網站以卡牌收藏為核心，將不同作品分成獨立主題頁面。
+            主頁黑金的高級感，帶出日本動漫的黃金時代：寶可夢、美少女戰士、幽遊白書。
+          </p>
+        </div>
 
-<!-- ===== Pokemon ===== -->
-<section id="pokemon" class="page">
-  <div class="section">
-    <h2>寶可夢收藏</h2>
+        <div class="hero-card">
+          <div class="hero-grid">
+            <div class="mini-card pokemon-card">
+              <h3>寶可夢</h3>
+              <p>冒險感與稀有收藏氣氛。</p>
+            </div>
+            <div class="mini-card sailormoon-card">
+              <h3>美少女戰士</h3>
+              <p>華麗少女感與復古浪漫。</p>
+            </div>
+            <div class="mini-card yuyu-card" style="grid-column: span 2;">
+              <h3>幽遊白書</h3>
+              <p>暗夜格鬥感與90年代熱血氣質。</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div class="collection-images">
-      <img src="image/pokemon/IMG_7997.JPG">
-    </div>
+      <section class="section">
+        <h2 class="section-title">首頁精選收藏</h2>
+        <p class="section-sub">
+          這裡可以先放你最想展示的代表卡，讓訪客一進站就知道你的收藏重點。下面這區我已經先幫你做成收藏櫃風格，之後你只要把卡名、說明和圖片換成自己的內容就可以。
+        </p>
 
-  </div>
-</section>
+        <div class="featured-grid">
+          <article class="showcase-card showcase-pokemon">
+            <div class="showcase-media">
+              <img src="image/pokemon/IMG_7997.JPG" alt="寶可夢精選收藏" />
+            </div>
+            <div class="showcase-body">
+              <div class="showcase-kicker">Featured Collection</div>
+              <h3>寶可夢精選卡</h3>
+              <p>皮卡丘、伊布家族、噴火龍、限定 PROMO 或 PSA10 鑑定卡。</p>
+              <div class="showcase-meta">
+                <span>Pokemon</span><span>High Rarity</span><span>PSA</span>
+              </div>
+            </div>
+          </article>
 
-<!-- ===== Sailor ===== -->
-<section id="sailormoon" class="page">
-  <div class="section">
-    <h2>美少女戰士收藏</h2>
+          <article class="showcase-card showcase-sailormoon">
+            <div class="showcase-media">
+              <img src="image/sailor/IMG_9557.jpeg" alt="美少女戰士精選收藏" />
+            </div>
+            <div class="showcase-body">
+              <div class="showcase-kicker">Featured Collection</div>
+              <h3>美少女戰士精選卡</h3>
+              <p>閃卡、會員證、懷舊收藏，走夢幻華麗感。</p>
+              <div class="showcase-meta">
+                <span>Sailor Moon</span><span>Vintage</span><span>Special</span>
+              </div>
+            </div>
+          </article>
 
-    <div class="collection-images">
-      <img src="image/sailor/IMG_8005.jpeg">
-      <img src="image/sailor/IMG_8011.jpeg">
-    </div>
+          <article class="showcase-card showcase-yuyu">
+            <div class="showcase-media">
+              <img src="image/yuyu/IMG_7996.JPG" alt="幽遊白書精選收藏" />
+            </div>
+            <div class="showcase-body">
+              <div class="showcase-kicker">Featured Collection</div>
+              <h3>幽遊白書精選卡</h3>
+              <p>經典角色卡、特殊版本與主題收藏。</p>
+              <div class="showcase-meta">
+                <span>Yu Yu Hakusho</span><span>Classic</span><span>Collection</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
 
-  </div>
-</section>
+      <section class="section">
+        <h2 class="section-title">收藏主題入口</h2>
+        <p class="section-sub">
+          主頁負責總覽與導覽，進入各分頁後再切換到對應作品的視覺語言，讓整個網站既統一又有層次。
+        </p>
 
-<!-- ===== YuYu ===== -->
-<section id="yuyu" class="page">
-  <div class="section">
-    <h2>幽遊白書收藏</h2>
+        <div class="theme-grid">
+          <a href="#pokemon" class="theme-panel panel-pokemon">
+            <h3>寶可夢收藏</h3>
+            <p>適合放 AR、SAR、PROMO、PSA 系列與高人氣角色主題收藏。</p>
+            <span class="btn">進入頁面</span>
+          </a>
 
-    <div class="collection-images">
-      <img src="image/yuyu/IMG_7998.jpeg">
-      <img src="image/yuyu/IMG_7999.jpeg">
-    </div>
+          <a href="#sailormoon" class="theme-panel panel-sailormoon">
+            <h3>美少女戰士收藏</h3>
+            <p>適合展示閃卡、會員卡、周邊卡、懷舊收藏與角色系列整理。</p>
+            <span class="btn">進入頁面</span>
+          </a>
 
-  </div>
-</section>
+          <a href="#yuyu" class="theme-panel panel-yuyu">
+            <h3>幽遊白書收藏</h3>
+            <p>適合放經典收藏卡、角色卡、特殊版本與作品介紹型整理頁面。</p>
+            <span class="btn">進入頁面</span>
+          </a>
+        </div>
+      </section>
 
-</main>
+      <section class="section">
+        <h2 class="section-title">實際收藏展示</h2>
+        <p class="section-sub">以下為你的實際收藏卡展示（幽遊白書＋美少女戰士），已做成收藏牆風格。</p>
 
-<!-- ===== Lightbox ===== -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="closeBtn">&times;</button>
-  <img id="lightboxImg">
-</div>
+        <div class="real-gallery">
+          <img src="image/yuyu/IMG_7998.jpeg" alt="幽遊白書收藏 1">
+          <img src="image/yuyu/IMG_7999.jpeg" alt="幽遊白書收藏 2">
+          <img src="image/yuyu/IMG_8001.jpeg" alt="幽遊白書收藏 3">
+          <img src="image/yuyu/IMG_8002.jpeg" alt="幽遊白書收藏 4">
+          <img src="image/sailor/IMG_8005.jpeg" alt="美少女戰士收藏 1">
+          <img src="image/sailor/IMG_8011.jpeg" alt="美少女戰士收藏 2">
+        </div>
+      </section>
+    </section>
 
-<script>
-const pages = document.querySelectorAll('.page');
-
-function showPage(){
-  const hash = location.hash || "#home";
-  pages.forEach(p=>p.classList.remove('active'));
-  document.querySelector(hash).classList.add('active');
-}
-window.addEventListener('hashchange',showPage);
-window.addEventListener('load',showPage);
-
-/* Lightbox */
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-
-document.querySelectorAll('img').forEach(img=>{
-  img.addEventListener('click',()=>{
-    lightbox.classList.add('active');
-    lightboxImg.src = img.src;
-  });
-});
-
-document.getElementById('closeBtn').onclick=()=>{
-  lightbox.classList.remove('active');
-};
-
-lightbox.onclick=(e)=>{
-  if(e.target===lightbox) lightbox.classList.remove('active');
-};
-</script>
-
-</body>
-</html>
+    <section id="pokemon" class="page page-pokemon">
+      <div class="sub-hero">
+        <div>
+          <h1>寶可夢收藏</h1>
+          <p>
+            以藍金色調呈現高稀有度、冒險感與收藏價值，適合展示你手上的熱門角色、分級卡與特別版本。
+          </p>
+        </div>
+      </div>
+      <div class="sub-content">
+        <div class="info-grid">
+          <div class="info-box">
+            <h2>頁面風格方向</h2>
+            <p>主視覺可以走電光、金屬、稀有卡展示櫃感，讓整體更有收藏市場與高端卡冊的味道。</p>
+            <
